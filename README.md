@@ -1,6 +1,6 @@
-# hello_world_plus
+# Hello, World! Plus
 
-A new Flutter project.
+Displays the famous Hello World message in multiple human languages.
 
 ## Getting Started
 

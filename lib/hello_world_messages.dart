@@ -1,5 +1,11 @@
-import 'package:hello_world_plus/hello_world_message.dart';
+// Copyright 2022-2024 Hellogramming. All rights reserved.
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://hellogramming.com/hello_world_plus/license/.
 
+import 'hello_world_message.dart';
+
+/// A list of Hello World messages in different languages.
 const List<HelloWorldMessage> helloWorldMessages = <HelloWorldMessage>[
   HelloWorldMessage('English', 'Hello World!'),
   HelloWorldMessage('Afrikaans', 'Hallo, wêreld!'),
