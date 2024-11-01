@@ -1,9 +1,21 @@
+// Copyright 2022-2024 Hellogramming. All rights reserved.
+// Use of this source code is governed by an MIT-style
+// license that can be found in the LICENSE file or at
+// https://hellogramming.com/hello_world_plus/license/.
+
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-import 'hello_world_messages.dart';
-import 'strings.dart' as strings;
+import 'package:url_launcher/url_launcher.dart';
 
+import 'hello_world_messages.dart';
+import 'message_list_screen.dart';
+import 'strings.dart' as strings;
+import 'urls.dart' as urls;
+
+/// The home screen of the Hello, World! Plus app.
+///
+/// Displays a random Hello World message and allows the user to refresh the message.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -12,17 +24,51 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  /// A random number generator used to select a random Hello World message.
   final Random _random = Random();
 
+  /// The index of the selected Hello World message.
   int _messageIndex = 0;
+
+  /// Handles the app bar actions.
+  void _onAppBarAction(_AppBarActions action) async {
+    switch (action) {
+      // Open the message list screen and update the message index if a new message is selected
+      case _AppBarActions.messageList:
+        final int? newIndex = await Navigator.of(context).push(
+          MaterialPageRoute<int>(builder: (_) => const MessageListScreen()),
+        );
+        if (newIndex != null) setState(() => _messageIndex = newIndex);
+        break;
+
+      // Open the view source URL in the default browser
+      case _AppBarActions.viewSource:
+        launchUrl(Uri.parse(urls.viewSourceUrl));
+        break;
+
+      // Open the about URL in the default browser
+      case _AppBarActions.about:
+        launchUrl(Uri.parse(urls.aboutUrl));
+        break;
+    }
+  }
+
+  /// Refreshes the Hello World message when the FAB is pressed.
+  void _onFABPressed() {
+    setState(() {
+      _messageIndex = _random.nextInt(helloWorldMessages.length);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(
         language: helloWorldMessages[_messageIndex].language,
-        // onAction: ,
+        onAction: _onAppBarAction,
       ),
+
+      // The body of the home screen displays the selected Hello World message
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
@@ -33,13 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+
+      // The FAB allows the user to refresh the Hello World message
       floatingActionButton: FloatingActionButton.large(
-        onPressed: () {
-          setState(() {
-            _messageIndex = _random.nextInt(helloWorldMessages.length);
-          });
-        },
-        tooltip: 'New Message',
+        tooltip: strings.homeFabTooltip,
+        onPressed: _onFABPressed,
         child: const Icon(Icons.refresh),
       ),
     );
@@ -48,11 +92,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
 /// Enum that defines the actions of the app bar.
 enum _AppBarActions {
+  messageList,
   viewSource,
   about,
 }
 
-/// The app bar of the recursive routing screen.
+/// The app bar of the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
     super.key, // ignore: unused_element
@@ -69,8 +114,13 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(strings.homeScreenTitle(language)),
+      title: Text(language),
       actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.list_alt_rounded),
+          tooltip: strings.messageListTooltip,
+          onPressed: () => onAction?.call(_AppBarActions.messageList),
+        ),
         PopupMenuButton<_AppBarActions>(
           onSelected: onAction,
           itemBuilder: (_) => [

@@ -6,7 +6,24 @@
 /// Application wide UI string constants.
 library;
 
+// -----------------------------------------------------------------------------
+// App
+// -----------------------------------------------------------------------------
+
 const String appName = 'Hello, World! Plus';
-String homeScreenTitle(String language) => 'Hello World in $language';
+
+// -----------------------------------------------------------------------------
+// Message List Screen
+// -----------------------------------------------------------------------------
+
+String homeScreenTitle(String language) => 'in $language';
+const String homeFabTooltip = 'Refresh message';
+const String messageListTooltip = 'View all Hello World messages';
 const String viewSourceMenuItem = 'View source code';
-const String aboutMenuItem = 'About these experiments';
+const String aboutMenuItem = 'About this app';
+
+// -----------------------------------------------------------------------------
+// Message List Screen
+// -----------------------------------------------------------------------------
+
+const String messageListScreenTitle = 'Hello World Messages';
