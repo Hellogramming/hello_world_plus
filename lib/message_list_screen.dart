@@ -1,7 +1,7 @@
 // Copyright 2022-2024 Hellogramming. All rights reserved.
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
-// https://hellogramming.com/hello_world_plus/license/.
+// https://hellogramming.com/helloworldplus/license/.
 
 import 'package:flutter/material.dart';
 
