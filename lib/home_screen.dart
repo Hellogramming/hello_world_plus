@@ -13,6 +13,7 @@ import 'message_list_screen.dart';
 import 'strings.dart' as strings;
 import 'urls.dart' as urls;
 import 'utils/color_utils.dart' as color_utils;
+import 'widgets/hello_world_message_view.dart';
 
 /// The home screen of the Hello, World! Plus app.
 ///
@@ -63,30 +64,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Color foregroundColor = color_utils.contrastColor(
+      helloWorldMessages[_messageIndex].color,
+    );
+
     return Scaffold(
       backgroundColor: helloWorldMessages[_messageIndex].color,
-      appBar: _AppBar(
-        language: helloWorldMessages[_messageIndex].languageName,
-        onAction: _onAppBarAction,
-      ),
+      appBar: _AppBar(onAction: _onAppBarAction, foregroundColor: foregroundColor),
 
       // The body of the home screen displays the selected Hello World message
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: Text(
-            helloWorldMessages[_messageIndex].message,
-            style: Theme.of(context).textTheme.displayMedium?.copyWith(
-              color: color_utils.contrastColor(helloWorldMessages[_messageIndex].color),
-            ),
-            textAlign: TextAlign.center,
-          ),
+      body: Center(
+        child: HelloWorldMessageView(
+          message: helloWorldMessages[_messageIndex],
+          foregroundColor: foregroundColor,
         ),
       ),
 
       // The FAB allows the user to refresh the Hello World message
       floatingActionButton: FloatingActionButton.large(
         tooltip: strings.homeFabTooltip,
+        backgroundColor: foregroundColor,
+        foregroundColor: helloWorldMessages[_messageIndex].color,
         onPressed: _onFABPressed,
         child: const Icon(Icons.refresh),
       ),
@@ -101,12 +99,11 @@ enum _AppBarActions { messageList, viewSource, about }
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
     super.key, // ignore: unused_element_parameter
-    required this.language,
+    required this.foregroundColor,
     this.onAction,
   });
 
-  /// The language of the current Hello World message.
-  final String language;
+  final Color foregroundColor;
 
   /// The callback that is called when an app bar action is pressed.
   final void Function(_AppBarActions action)? onAction;
@@ -114,7 +111,10 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(language),
+      backgroundColor: Colors.transparent,
+      foregroundColor: foregroundColor,
+      elevation: 0,
+
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.list_alt_rounded),
