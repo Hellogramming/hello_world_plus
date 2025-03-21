@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import 'hello_world_messages.dart';
+import 'data/hello_world_messages.dart';
 import 'message_list_screen.dart';
 import 'strings.dart' as strings;
 import 'urls.dart' as urls;
+import 'utils/color_utils.dart' as color_utils;
 
 /// The home screen of the Hello, World! Plus app.
 ///
@@ -63,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: helloWorldMessages[_messageIndex].color,
       appBar: _AppBar(
         language: helloWorldMessages[_messageIndex].languageName,
         onAction: _onAppBarAction,
@@ -74,7 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
           child: Text(
             helloWorldMessages[_messageIndex].message,
-            style: Theme.of(context).textTheme.displayMedium,
+            style: Theme.of(context).textTheme.displayMedium?.copyWith(
+              color: color_utils.contrastColor(helloWorldMessages[_messageIndex].color),
+            ),
             textAlign: TextAlign.center,
           ),
         ),

@@ -5,9 +5,12 @@
 
 import 'dart:ui';
 
+import '../utils/color_utils.dart' as color_utils;
+
 /// A Hello World message in a specific language.
 class HelloWorldMessage {
-  const HelloWorldMessage(this.languageCode, this.languageName, this.languageColor, this.message);
+  HelloWorldMessage(this.languageCode, this.languageName, this.message)
+    : color = color_utils.randomColor();
 
   /// The ISO 639-3 code of the language of the message.
   final String languageCode;
@@ -15,8 +18,8 @@ class HelloWorldMessage {
   /// The English name of the language of the message.
   final String languageName;
 
-  /// The color associated with the language.
-  final Color languageColor;
+  /// A random color associated with the message.
+  final Color color;
 
   /// The Hello World message in the specified language.
   final String message;

@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'hello_world_messages.dart';
+import 'data/hello_world_messages.dart';
 import 'strings.dart' as strings;
 
 /// The storage bucket used to store the scroll position of the message list view.
