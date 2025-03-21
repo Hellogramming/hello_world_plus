@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import 'data/hello_world_messages.dart';
-import 'message_list_screen.dart';
-import 'strings.dart' as strings;
-import 'urls.dart' as urls;
-import 'utils/color_utils.dart' as color_utils;
-import 'widgets/hello_world_message_view.dart';
+import '../data/hello_world_messages.dart';
+import '../message_list_screen.dart';
+import '../strings.dart' as strings;
+import '../urls.dart' as urls;
+import '../utils/color_utils.dart' as color_utils;
+import '../utils/utils.dart';
+import '../widgets/hello_world_message_view.dart';
+import 'simple_message_screen.dart';
 
 /// The home screen of the Hello, World! Plus app.
 ///
@@ -35,6 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Handles the app bar actions.
   void _onAppBarAction(_AppBarActions action) async {
     switch (action) {
+      case _AppBarActions.simpleMessage:
+        // Open the simple message screen with the selected message
+        await navigateTo(context, SimpleMessageScreen(message: helloWorldMessages[_messageIndex]));
+        break;
+
       // Open the message list screen and update the message index if a new message is selected
       case _AppBarActions.messageList:
         final int? newIndex = await Navigator.of(
@@ -68,32 +75,37 @@ class _HomeScreenState extends State<HomeScreen> {
       helloWorldMessages[_messageIndex].color,
     );
 
-    return Scaffold(
-      backgroundColor: helloWorldMessages[_messageIndex].color,
-      appBar: _AppBar(onAction: _onAppBarAction, foregroundColor: foregroundColor),
+    return AnimatedContainer(
+      duration: const Duration(seconds: 1),
+      color: helloWorldMessages[_messageIndex].color,
+      child: Scaffold(
+        // backgroundColor: helloWorldMessages[_messageIndex].color,
+        backgroundColor: Colors.transparent,
+        appBar: _AppBar(onAction: _onAppBarAction, foregroundColor: foregroundColor),
 
-      // The body of the home screen displays the selected Hello World message
-      body: Center(
-        child: HelloWorldMessageView(
-          message: helloWorldMessages[_messageIndex],
-          foregroundColor: foregroundColor,
+        // The body of the home screen displays the selected Hello World message
+        body: Center(
+          child: HelloWorldMessageView(
+            message: helloWorldMessages[_messageIndex],
+            foregroundColor: foregroundColor,
+          ),
         ),
-      ),
 
-      // The FAB allows the user to refresh the Hello World message
-      floatingActionButton: FloatingActionButton.large(
-        tooltip: strings.homeFabTooltip,
-        backgroundColor: foregroundColor,
-        foregroundColor: helloWorldMessages[_messageIndex].color,
-        onPressed: _onFABPressed,
-        child: const Icon(Icons.refresh),
+        // The FAB allows the user to refresh the Hello World message
+        floatingActionButton: FloatingActionButton.large(
+          tooltip: strings.homeFabTooltip,
+          backgroundColor: foregroundColor,
+          foregroundColor: helloWorldMessages[_messageIndex].color,
+          onPressed: _onFABPressed,
+          child: const Icon(Icons.refresh),
+        ),
       ),
     );
   }
 }
 
 /// Enum that defines the actions of the app bar.
-enum _AppBarActions { messageList, viewSource, about }
+enum _AppBarActions { simpleMessage, messageList, viewSource, about }
 
 /// The app bar of the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -103,6 +115,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onAction,
   });
 
+  /// The color of the app bar text.
   final Color foregroundColor;
 
   /// The callback that is called when an app bar action is pressed.
@@ -116,6 +129,12 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
 
       actions: <Widget>[
+        IconButton(
+          // icon: const Icon(Icons.sms_outlined),
+          icon: const Icon(Icons.visibility_outlined),
+          tooltip: strings.simpleMessageTooltip,
+          onPressed: () => onAction?.call(_AppBarActions.simpleMessage),
+        ),
         IconButton(
           icon: const Icon(Icons.list_alt_rounded),
           tooltip: strings.messageListTooltip,

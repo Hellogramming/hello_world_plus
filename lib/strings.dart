@@ -18,6 +18,7 @@ const String appName = 'Hello, World! Plus';
 
 String homeScreenTitle(String language) => 'in $language';
 const String homeFabTooltip = 'Refresh message';
+const String simpleMessageTooltip = 'View simple message';
 const String messageListTooltip = 'View all Hello World messages';
 const String viewSourceMenuItem = 'View source code';
 const String aboutMenuItem = 'About this app';

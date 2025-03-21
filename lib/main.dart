@@ -5,7 +5,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
+import 'screens/home_screen.dart';
 import 'strings.dart' as strings;
 
 void main() {
