@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
+import '../common/strings.dart' as strings;
+import '../common/urls.dart' as urls;
 import '../data/hello_world_messages.dart';
-import '../message_list_screen.dart';
-import '../strings.dart' as strings;
-import '../urls.dart' as urls;
 import '../utils/color_utils.dart' as color_utils;
 import '../utils/utils.dart';
 import '../widgets/hello_world_message_view.dart';
+import 'message_list_screen.dart';
 import 'simple_message_screen.dart';
 
 /// The home screen of the Hello, World! Plus app.

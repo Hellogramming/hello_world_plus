@@ -9,6 +9,9 @@ import '../models/hello_world_message.dart';
 import '../utils/color_utils.dart' as color_utils;
 import '../widgets/hello_world_message_view.dart';
 
+/// A screen that displays a Hello World message with a minimal layout.
+///
+/// The message is displayed in a large font with a background color in the center of the screen.
 class SimpleMessageScreen extends StatelessWidget {
   const SimpleMessageScreen({super.key, required this.message});
 
@@ -21,11 +24,15 @@ class SimpleMessageScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: message.color,
+
+      // A transparent app bar with no elevation
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: foregroundColor,
         elevation: 0.0,
       ),
+
+      // A centered Hello World message
       body: Center(
         child: HelloWorldMessageView(
           message: message,

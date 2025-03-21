@@ -6,7 +6,7 @@
 import 'package:flutter/material.dart';
 
 import 'screens/home_screen.dart';
-import 'strings.dart' as strings;
+import 'common/strings.dart' as strings;
 
 void main() {
   runApp(const HelloWorldPlusApp());
