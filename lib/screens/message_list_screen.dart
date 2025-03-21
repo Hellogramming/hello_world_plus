@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 
 import '../common/strings.dart' as strings;
 import '../data/hello_world_messages.dart';
+import '../models/hello_world_message.dart';
 import '../utils/color_utils.dart' as color_utils;
-import '../widgets/language_view.dart';
+import '../widgets/hello_world_message_view.dart';
 
 /// The storage bucket used to store the scroll position of the message list view.
 final PageStorageBucket _storageBucket = PageStorageBucket();
@@ -34,28 +35,19 @@ class MessageListScreen extends StatelessWidget {
           key: const PageStorageKey<String>('message_list'),
           itemCount: helloWorldMessages.length,
           itemBuilder: (BuildContext context, int index) {
-            final Color foregroundColor = color_utils.contrastColor(
-              helloWorldMessages[index].color,
-            );
-            return ListTile(
-              contentPadding: const EdgeInsets.all(32.0),
-              tileColor: helloWorldMessages[index].color,
-              textColor: foregroundColor,
-              title: Text(
-                helloWorldMessages[index].message,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: foregroundColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 96.0,
-                  height: 1.2,
+            final HelloWorldMessage message = helloWorldMessages[index];
+
+            final Color foregroundColor = color_utils.contrastColor(message.color);
+            return InkWell(
+              onTap: () => _onItemTapped(context, index),
+              child: Ink(
+                color: message.color,
+                child: HelloWorldMessageView(
+                  foregroundColor: foregroundColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 64.0),
+                  message: message,
                 ),
               ),
-              subtitle: LanguageView(
-                languageCode: helloWorldMessages[index].languageCode,
-                languageName: helloWorldMessages[index].languageName,
-                foregroundColor: color_utils.contrastColor(helloWorldMessages[index].color),
-              ),
-              onTap: () => _onItemTapped(context, index),
             );
           },
         ),
