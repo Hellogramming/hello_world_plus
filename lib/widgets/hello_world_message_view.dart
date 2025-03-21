@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/hello_world_message.dart';
+import 'language_view.dart';
 
 /// A widget that displays a Hello World message.
 ///
@@ -47,37 +48,11 @@ class HelloWorldMessageView extends StatelessWidget {
     // Display the language name and code immediately below the message
     final Widget languageView = FittedBox(
       fit: BoxFit.scaleDown,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          // Display the language name
-          Text(
-            message.languageName,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: foregroundColor,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.5,
-            ),
-          ),
-          const SizedBox(width: 12),
-
-          // Display the language code in a rounded border
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-            decoration: BoxDecoration(
-              border: Border.all(color: foregroundColor.withValues(alpha: 0.3), width: 1.5),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              message.languageCode,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: foregroundColor.withValues(alpha: 0.8),
-                fontFamily: 'monospace',
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ],
+      child: LanguageView(
+        languageCode: message.languageCode,
+        languageName: message.languageName,
+        foregroundColor: foregroundColor,
+        textStyle: Theme.of(context).textTheme.titleLarge,
       ),
     );
 

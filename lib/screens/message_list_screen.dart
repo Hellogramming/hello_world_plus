@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 
 import '../common/strings.dart' as strings;
 import '../data/hello_world_messages.dart';
+import '../utils/color_utils.dart' as color_utils;
+import '../widgets/language_view.dart';
 
 /// The storage bucket used to store the scroll position of the message list view.
 final PageStorageBucket _storageBucket = PageStorageBucket();
@@ -32,9 +34,27 @@ class MessageListScreen extends StatelessWidget {
           key: const PageStorageKey<String>('message_list'),
           itemCount: helloWorldMessages.length,
           itemBuilder: (BuildContext context, int index) {
+            final Color foregroundColor = color_utils.contrastColor(
+              helloWorldMessages[index].color,
+            );
             return ListTile(
-              title: Text(helloWorldMessages[index].message),
-              subtitle: Text(helloWorldMessages[index].languageName),
+              contentPadding: const EdgeInsets.all(32.0),
+              tileColor: helloWorldMessages[index].color,
+              textColor: foregroundColor,
+              title: Text(
+                helloWorldMessages[index].message,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: foregroundColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 96.0,
+                  height: 1.2,
+                ),
+              ),
+              subtitle: LanguageView(
+                languageCode: helloWorldMessages[index].languageCode,
+                languageName: helloWorldMessages[index].languageName,
+                foregroundColor: color_utils.contrastColor(helloWorldMessages[index].color),
+              ),
               onTap: () => _onItemTapped(context, index),
             );
           },
