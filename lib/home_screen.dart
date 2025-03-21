@@ -1,7 +1,7 @@
-// Copyright 2022-2024 Hellogramming. All rights reserved.
+// Copyright 2022-2025 Tecdrop. All rights reserved.
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
-// https://hellogramming.com/helloworldplus/license/.
+// https://www.tecdrop.com/helloworldplus/license/.
 
 import 'dart:math';
 import 'package:flutter/material.dart';
@@ -35,9 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
     switch (action) {
       // Open the message list screen and update the message index if a new message is selected
       case _AppBarActions.messageList:
-        final int? newIndex = await Navigator.of(context).push(
-          MaterialPageRoute<int>(builder: (_) => const MessageListScreen()),
-        );
+        final int? newIndex = await Navigator.of(
+          context,
+        ).push(MaterialPageRoute<int>(builder: (_) => const MessageListScreen()));
         if (newIndex != null) setState(() => _messageIndex = newIndex);
         break;
 
@@ -91,11 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 /// Enum that defines the actions of the app bar.
-enum _AppBarActions {
-  messageList,
-  viewSource,
-  about,
-}
+enum _AppBarActions { messageList, viewSource, about }
 
 /// The app bar of the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -123,16 +119,17 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
         PopupMenuButton<_AppBarActions>(
           onSelected: onAction,
-          itemBuilder: (_) => [
-            const PopupMenuItem(
-              value: _AppBarActions.viewSource,
-              child: Text(strings.viewSourceMenuItem),
-            ),
-            const PopupMenuItem(
-              value: _AppBarActions.about,
-              child: Text(strings.aboutMenuItem),
-            ),
-          ],
+          itemBuilder:
+              (_) => [
+                const PopupMenuItem(
+                  value: _AppBarActions.viewSource,
+                  child: Text(strings.viewSourceMenuItem),
+                ),
+                const PopupMenuItem(
+                  value: _AppBarActions.about,
+                  child: Text(strings.aboutMenuItem),
+                ),
+              ],
         ),
       ],
     );

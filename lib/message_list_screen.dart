@@ -1,7 +1,7 @@
-// Copyright 2022-2024 Hellogramming. All rights reserved.
+// Copyright 2022-2025 Tecdrop. All rights reserved.
 // Use of this source code is governed by an MIT-style
 // license that can be found in the LICENSE file or at
-// https://hellogramming.com/helloworldplus/license/.
+// https://www.tecdrop.com/helloworldplus/license/.
 
 import 'package:flutter/material.dart';
 
@@ -27,9 +27,7 @@ class MessageListScreen extends StatelessWidget {
     return PageStorage(
       bucket: _storageBucket,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(strings.messageListScreenTitle),
-        ),
+        appBar: AppBar(title: const Text(strings.messageListScreenTitle)),
         body: ListView.builder(
           key: const PageStorageKey<String>('message_list'),
           itemCount: helloWorldMessages.length,
