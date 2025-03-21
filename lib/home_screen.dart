@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(
-        language: helloWorldMessages[_messageIndex].language,
+        language: helloWorldMessages[_messageIndex].languageName,
         onAction: _onAppBarAction,
       ),
 
@@ -96,7 +96,7 @@ enum _AppBarActions { messageList, viewSource, about }
 /// The app bar of the home screen.
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({
-    super.key, // ignore: unused_element
+    super.key, // ignore: unused_element_parameter
     required this.language,
     this.onAction,
   });

@@ -34,7 +34,7 @@ class MessageListScreen extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               title: Text(helloWorldMessages[index].message),
-              subtitle: Text(helloWorldMessages[index].language),
+              subtitle: Text(helloWorldMessages[index].languageName),
               onTap: () => _onItemTapped(context, index),
             );
           },

@@ -3,12 +3,20 @@
 // license that can be found in the LICENSE file or at
 // https://www.tecdrop.com/helloworldplus/license/.
 
+import 'dart:ui';
+
 /// A Hello World message in a specific language.
 class HelloWorldMessage {
-  const HelloWorldMessage(this.language, this.message);
+  const HelloWorldMessage(this.languageCode, this.languageName, this.languageColor, this.message);
 
-  /// The language of the message.
-  final String language;
+  /// The ISO 639-3 code of the language of the message.
+  final String languageCode;
+
+  /// The English name of the language of the message.
+  final String languageName;
+
+  /// The color associated with the language.
+  final Color languageColor;
 
   /// The Hello World message in the specified language.
   final String message;
